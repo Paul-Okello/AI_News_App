@@ -8,37 +8,47 @@ import {
   CardMedia,
   Typography,
 } from "@material-ui/core";
+import useStyles from "./styles";
 
-const NewsCard = ({ article: {}, i }) => {
+const NewsCard = ({
+  article: { description, publishedAt, source, title, url, urlToImage },
+  i,
+}) => {
+  const classes = useStyles();
   return (
-    <Card>
-      <CardActionArea>
-        <CardMedia />
-        <div>
-          <Typography
-            variant="body2"
-            color="testSecondary"
-            component="h2"
-          ></Typography>
-          <Typography
-            variant="body2"
-            color="testSecondary"
-            component="h2"
-          ></Typography>
+    <Card className={classes.card}>
+      <CardActionArea href={url} target="_blank">
+        <CardMedia
+          className={classes.media}
+          image={
+            urlToImage ||
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1iKPijPolDCEWyx9OnscOFqrxgkjEvdX6Gg&usqp=CAU"
+          }
+        />
+        <div className={classes.details}>
+          <Typography variant="body2" color="testSecondary" component="h2">
+            {new Date(publishedAt).toDateString()}
+          </Typography>
+          <Typography variant="body2" color="testSecondary" component="h2">
+            {source.name}
+          </Typography>
         </div>
-        <Typography gutterBottom variant="h5"></Typography>
+        <Typography gutterBottom variant="h5" className={classes.title}>
+          {" "}
+          {title}
+        </Typography>
         <CardContent>
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            component="p"
-          ></Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {description}
+          </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary"></Button>
+      <CardActions className={classes.cardActions}>
+        <Button size="small" color="primary">
+          LEARN MORE
+        </Button>
         <Typography variant="h5" color="textSecondary">
-          {article.description}
+          {i + 1}
         </Typography>
       </CardActions>
     </Card>
