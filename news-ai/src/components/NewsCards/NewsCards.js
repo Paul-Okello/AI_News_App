@@ -1,7 +1,8 @@
 import React from "react";
-import NewsCard from "../NewsCard/NewsCard";
+
 import { Grid, Grow, Typography } from "@material-ui/core";
 import useStyles from "./styles";
+import NewsCard from "./NewsCard/NewsCard";
 
 const infoCards = [
   { color: "#00838f", title: "Latest News", text: "Give me the latest news" },
@@ -26,7 +27,7 @@ const infoCards = [
   },
 ];
 
-const NewsCards = ({ articles }) => {
+const NewsCards = ({ articles, activeArticle }) => {
   const classes = useStyles();
 
   if (!articles.length) {
@@ -39,25 +40,31 @@ const NewsCards = ({ articles }) => {
           spacing={3}
         >
           {infoCards.map((infoCard) => (
-            <Grid item xs={12} sm={6} className={classes.inforCard}>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              lg={3}
+              className={classes.infoCard}
+            >
               <div
                 className={classes.card}
-                style={{
-                  backgroundColor: infoCard.color,
-                }}
+                style={{ backgroundColor: infoCard.color }}
               >
-                <Typography variant="h5">{infoCard.title}</Typography>
+                <Typography variant="h5" component="h5">
+                  {infoCard.title}
+                </Typography>
                 {infoCard.info ? (
-                  <Typography variant="h6">
-                    <strong>
-                      {infoCard.title.split(" ")[2]}: <br /> {infoCard.info}{" "}
-                    </strong>
+                  <Typography variant="h6" component="h6">
+                    <strong>{infoCard.title.split(" ")[2]}</strong>: <br />
+                    {infoCard.info}
                   </Typography>
                 ) : null}
+                <Typography variant="h6" component="h6">
+                  Try saying: <br /> <i>{infoCard.text}</i>
+                </Typography>
               </div>
-              <Typography variant="h6">
-                try saying: <br /> <i>{infoCard.text}</i>
-              </Typography>
             </Grid>
           ))}
         </Grid>
@@ -74,7 +81,7 @@ const NewsCards = ({ articles }) => {
       >
         {articles.map((article, i) => (
           <Grid item xs={12} sm={6} md={4} lg={3} style={{ display: "flex" }}>
-            <NewsCard article={article} i={i} />
+            <NewsCard article={article} i={i} activeArticle={activeArticle} />
           </Grid>
         ))}
       </Grid>
